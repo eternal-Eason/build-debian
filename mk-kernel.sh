@@ -44,7 +44,12 @@ fi
 cd ${LOCALPATH}/kernel
 [ ! -e .config ] && echo -e "\e[36m Using ${DEFCONFIG} \e[0m" && make ${DEFCONFIG}
 
-make -j8
+
+#make menuconfig
+#make savedefconfig
+#make distclean
+
+make -j$(nproc)
 cd ${LOCALPATH}
 
 if [ "${ARCH}" == "arm" ]; then

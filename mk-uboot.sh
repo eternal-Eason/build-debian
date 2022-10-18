@@ -357,7 +357,8 @@ elif [ "${CHIP}" == "rk3568" ]; then
 	cp ../rkbin/bin/rk35/rk356x_spl_loader_ddr1056_v1.10.111.bin ${OUT}/u-boot/
 	generate_spi_image
 elif [ "${CHIP}" == "rk3588s" ] || [ "${CHIP}" == "rk3588" ]; then
-	make ${UBOOT_DEFCONFIG}
+	echo "start build uboot ${CHIP}"
+	make -j$(nproc) ${UBOOT_DEFCONFIG}
 	make BL31=../rkbin/bin/rk35/rk3588_bl31_v1.28.elf spl/u-boot-spl.bin u-boot.dtb u-boot.itb
 	./tools/mkimage -n rk3588 -T rksd -d ../rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin:spl/u-boot-spl.bin idbloader.img
 	cp u-boot.itb ${OUT}/u-boot/

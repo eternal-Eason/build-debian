@@ -1,0 +1,23 @@
+
+可能编译工具找不到  需要修改  sudo apt-get install gcc-aarch64-linux-gnu
+
+一、uboot 编译
+./build/mk-uboot.sh rk3588-rock-5b     #For ROCK 5B
+ls out/u-boot/
+idbloader.img  rk3588_spl_loader_v1.07.111.bin  spi  u-boot.itb
+
+二、kernel编译
+./build/mk-kernel.sh rk3588-rock-5b    #For ROCK 5B
+
+Optionally, if you want to change the default kernel config
+
+cd ~/rk3588-sdk
+cd kernel
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-none-linux-gnu-
+make rockchip_linux_defconfig
+make menuconfig
+make savedefconfig
+cp defconfig arch/arm64/configs/rockchip_linux_defconfig
+cd ..
+./build/mk-kernel.sh rk3588-rock-5b    #For ROCK 5B
