@@ -21,3 +21,18 @@ make savedefconfig
 cp defconfig arch/arm64/configs/rockchip_linux_defconfig
 cd ..
 ./build/mk-kernel.sh rk3588-rock-5b    #For ROCK 5B
+
+
+三、编译buildroot
+1.第一次编译前
+
+cd rk3588_sdk/
+
+cp ./buildroot/rockchip_misc/device . -rf
+cp ./buildroot/rockchip_misc/external . -rf
+cp ./buildroot/rockchip_misc/*.img  ./out/ -rf
+
+然后编译
+./build/mk-buildroot.sh 
+
+

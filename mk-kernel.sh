@@ -13,18 +13,31 @@ finish() {
 }
 trap finish ERR
 
-if [ $# != 1 ]; then
-	BOARD=rk3288-evb
-fi
+
+model_list=(
+	"rk3588-rock-5b"
+	"rk3588-rock-5b menuconfig"
+	"rk3588-rock-5b savedefconfig"
+	"rk3588-rock-5b distclean"
+)
+
+function help()
+{
+	echo "Usage: ./build/mk-kernel.sh rk3588-rock-5b"
+	echo "e.g."
+	for i in "${model_list[@]}"; do
+		echo "  ./build/mk-kernel.sh $(echo $i)"
+	done
+}
+
+help
 
 [ ! -d ${OUT} ] && mkdir ${OUT}
 [ ! -d ${OUT}/kernel ] && mkdir ${OUT}/kernel
 
 source $LOCALPATH/build/board_configs.sh $BOARD
 
-if [ $? -ne 0 ]; then
-	exit
-fi
+
 
 echo -e "\e[36m Building kernel for ${BOARD} board! \e[0m"
 
@@ -42,14 +55,25 @@ if version_gt "${KERNEL_VERSION}" "4.5"; then
 fi
 
 cd ${LOCALPATH}/kernel
+
+
 [ ! -e .config ] && echo -e "\e[36m Using ${DEFCONFIG} \e[0m" && make ${DEFCONFIG}
 
+if [ "$2" == "menuconfig" ]; then
+	make menuconfig
+	exit
+elif [ "$2" == "savedefconfig" ]; then
+	make savedefconfig
+	exit
+elif [ "$2" == "distclean" ]; then
+	make distclean
+	exit
+else
+	make -j$(nproc)
+fi
 
-#make menuconfig
-#make savedefconfig
-#make distclean
 
-make -j$(nproc)
+
 cd ${LOCALPATH}
 
 if [ "${ARCH}" == "arm" ]; then

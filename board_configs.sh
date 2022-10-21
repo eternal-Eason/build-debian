@@ -303,7 +303,7 @@ case ${BOARD} in
 	"rk3588-rock-5b")
 		DEFCONFIG=rockchip_linux_defconfig
 		UBOOT_DEFCONFIG=rock-5b-rk3588_defconfig
-		DTB=rk3588-rock-5b.dtb
+		DTB=rk3588-rock-5b_lyh.dtb
 		export ARCH=arm64
 		export CROSS_COMPILE=aarch64-linux-gnu-
 		CHIP="rk3588"
