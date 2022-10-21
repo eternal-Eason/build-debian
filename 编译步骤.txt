@@ -27,7 +27,7 @@ cd ..
 1.第一次编译前
 
 cd rk3588_sdk/
-
+./buildroot/rockchip_misc/external/camera_engine_rkaiq/common.zip 解压一下。
 cp ./buildroot/rockchip_misc/device . -rf
 cp ./buildroot/rockchip_misc/external . -rf
 cp ./buildroot/rockchip_misc/*.img  ./out/ -rf
